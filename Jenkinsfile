@@ -15,10 +15,16 @@ node {
         }
     }
 
-    docker.image('cdrx/pyinstaller-linux:python2').inside {
+    docker.image('python:3.9').inside('-u root') {
+        stage('Manual Approval') {
+            input: "Lanjutkan ke tahap Deploy?"
+        }
         try {
-            stage('deploy') {
-                sh 'pyinstaller --onefile sources/add2vals.py' 
+            stage('Deploy') {
+                sh 'pip install pyinstaller'
+                sh 'pyinstaller --onefile sources/add2vals.py'
+                sleep time: 1, unit: 'MINUTES'
+                echo 'one minute passed'
             } 
         }   finally {
                 archiveArtifacts 'dist/add2vals'
