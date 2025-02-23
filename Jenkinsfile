@@ -14,4 +14,14 @@ node {
                 junit 'test-reports/results.xml'
         }
     }
+
+    docker.image('cdrx/pyinstaller-linux:python2').inside {
+        try {
+            stage('deploy') {
+                sh 'pyinstaller --onefile sources/add2vals.py' 
+            } 
+        }   finally {
+                archiveArtifacts 'dist/add2vals'
+        }
+    }
 }
