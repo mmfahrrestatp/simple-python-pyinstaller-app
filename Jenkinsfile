@@ -17,7 +17,7 @@ node {
 
     docker.image('python:3.9').inside('-u root') {
         stage('Manual Approval') {
-            input: "Lanjutkan ke tahap Deploy?"
+            input message: "Lanjutkan ke tahap Deploy?"
         }
         try {
             stage('Deploy') {
